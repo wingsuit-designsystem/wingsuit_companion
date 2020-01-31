@@ -1,0 +1,10 @@
+name: Wingsuit Theme companion Module
+type: module
+description: 'Add Wingsuit Theme extensions.'
+# core: 8.x
+package: wingsuit
+
+core: '8.x'
+project: 'wingsuit_companion'
+dependencies:
+  - ui_patterns:ui_patterns

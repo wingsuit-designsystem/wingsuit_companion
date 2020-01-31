@@ -1,0 +1,9 @@
+services:
+  wingsuit_companion.twig:
+    arguments: ['@renderer', '@url_generator', '@theme.manager', '@date.formatter']
+    class: Drupal\wingsuit_companion\TwigExtension\WingsuitTheme
+    tags:
+      - { name: twig.extension }
+parameters:
+  wingsuit_companion.file_extensions:
+    - ".wingsuit.yml"

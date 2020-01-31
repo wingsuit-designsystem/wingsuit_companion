@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Implements hook_plugin_filter_TYPE_alter().
+ */
+function wingsuit_companion_plugin_filter_layout_alter(array &$definitions, array $extra, $consumer) {
+  // Hide all none ui patterns layouts.
+  /**
+   * @var string $key
+   * @var \Drupal\Core\Layout\LayoutDefinition $definition
+   */
+  foreach ($definitions as $key => $definition) {
+    if ($definition->getProvider() != 'wingsuit') {
+      unset($definitions[$key]);
+    }
+  }
+
+}
