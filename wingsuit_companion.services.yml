@@ -7,3 +7,4 @@ services:
 parameters:
   wingsuit_companion.file_extensions:
     - ".wingsuit.yml"
+    - ".wingsuit.yaml"
