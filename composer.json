@@ -1,0 +1,26 @@
+{
+  "name": "drupal/wingsuit_companion",
+  "description": "Wingsuit companion app for drupal app integration.",
+  "type": "drupal-module",
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "homepage": "https://www.drupal.org/project/wingsuit_companion",
+  "authors": [
+    {
+      "name": "Christian Wiedemann (Christian.wiedemann)",
+      "homepage": "https://www.drupal.org/u/christianwiedemann",
+      "role": "Maintainer"
+    },
+    {
+      "name": "David Stangl (Duwid)",
+      "homepage": "https://www.drupal.org/u/duwid",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/wingsuit_companion?version=8.x"
+  },
+  "require-dev": {
+    "drupal/system_stream_wrapper": "^1.0@beta"
+  }
+}

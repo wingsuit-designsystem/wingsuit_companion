@@ -2,6 +2,7 @@
 
 namespace Drupal\wingsuit_companion\TwigExtension;
 
+use Drupal\Core\Site\Settings;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Template\TwigExtension;
 
@@ -27,7 +28,7 @@ class WingsuitTheme extends TwigExtension {
     return [
       new \Twig_SimpleFunction('modifier_array', array($this, 'modifierArray')),
       new \Twig_SimpleFunction('modifier_class', array($this, 'modifierClass')),
-      new \Twig_SimpleFunction('attributes_object', array($this, 'attributesObject')),
+      new \Twig_SimpleFunction('svg_cache_key', array($this, 'svgCacheKey')),
     ];
   }
 
@@ -46,11 +47,12 @@ class WingsuitTheme extends TwigExtension {
 
     return trim($naked);
   }
+
   /**
    * @inheritdoc
    */
   public function getName() {
-    return 'keytec_theme';
+    return 'wingsuit_theme';
   }
 
   /**
@@ -104,5 +106,12 @@ class WingsuitTheme extends TwigExtension {
       $modifier = implode(' ', $modifier);
     }
     return array_filter(array_unique(explode(' ', $modifier)));
+  }
+
+  /**
+   * @return mixed|null
+   */
+  public static function svgCacheKey () {
+    return Settings::get('deployment_identifier');
   }
 }
