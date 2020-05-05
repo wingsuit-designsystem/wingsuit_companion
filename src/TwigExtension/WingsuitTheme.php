@@ -109,6 +109,8 @@ class WingsuitTheme extends TwigExtension {
   }
 
   /**
+   * Uses deployment key as cache key for generated svgs.
+   *
    * @return mixed|null
    */
   public static function svgCacheKey () {

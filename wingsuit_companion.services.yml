@@ -4,6 +4,10 @@ services:
     class: Drupal\wingsuit_companion\TwigExtension\WingsuitTheme
     tags:
       - { name: twig.extension }
+  stream_wrapper.wingsuit:
+    class: Drupal\wingsuit_companion\StreamWrapper\WingsuitStreamWrapper
+    tags:
+      - { name: stream_wrapper, scheme: wingsuit }
 parameters:
   wingsuit_companion.file_extensions:
     - ".wingsuit.yml"
