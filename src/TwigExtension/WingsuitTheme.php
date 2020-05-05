@@ -28,7 +28,7 @@ class WingsuitTheme extends TwigExtension {
     return [
       new \Twig_SimpleFunction('modifier_array', array($this, 'modifierArray')),
       new \Twig_SimpleFunction('modifier_class', array($this, 'modifierClass')),
-      new \Twig_SimpleFunction('svg_cache_key', array($this, 'svgCacheKey')),
+      new \Twig_SimpleFunction('ws_itok', array($this, 'wsItok')),
     ];
   }
 
@@ -107,7 +107,7 @@ class WingsuitTheme extends TwigExtension {
    *
    * @return mixed|null
    */
-  public static function svgCacheKey () {
+  public static function wsItok () {
     return Settings::get('deployment_identifier');
   }
 }
