@@ -83,12 +83,6 @@ class WingsuitTheme extends TwigExtension {
   }
 
   /**
-   * @param $attributes
-   */
-  public static function attributesObject($attributes = array()) {
-    return new Attribute($attributes);
-  }
-  /**
    * Builds an array of modifier strings.
    *
    * @param string|array $modifier

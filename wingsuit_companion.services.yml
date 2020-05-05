@@ -7,7 +7,7 @@ services:
   stream_wrapper.wingsuit:
     class: Drupal\wingsuit_companion\StreamWrapper\WingsuitStreamWrapper
     tags:
-      - { name: stream_wrapper, scheme: wingsuit }
+      - { name: stream_wrapper, scheme: wsdist }
 parameters:
   wingsuit_companion.file_extensions:
     - ".wingsuit.yml"
