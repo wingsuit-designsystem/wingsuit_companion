@@ -17,6 +17,11 @@ class WingsuitStreamWrapper extends ExtensionStreamBase {
    */
   protected $themeHandler;
 
+  protected function getOwnerName() {
+    $app_name = parent::getOwnerName();
+    return $app_name;
+  }
+
   /**
    * Returns the directory path to Wingsuits dist directory set in settings.php.
    * Otherwise it will return the path to Wingsuits default dist location.
@@ -27,7 +32,7 @@ class WingsuitStreamWrapper extends ExtensionStreamBase {
     if (!empty(Settings::get('wingsuit_dist'))) {
       return Settings::get('wingsuit_dist');
     }
-    return $this->getThemeHandler()->getTheme('wingsuit')->getPath() . '/../../dist/app-drupal';
+    return $this->getThemeHandler()->getTheme('wingsuit')->getPath() . '/../../dist/' . $this->getOwnerName();
   }
 
   /**
