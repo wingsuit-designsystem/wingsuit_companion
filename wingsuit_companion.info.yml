@@ -1,6 +1,6 @@
-name: Wingsuit Theme companion Module
+name: The companion module of "Wingsuit"
 type: module
-description: 'Add Wingsuit Theme extensions.'
+description: 'Add Twig extensions and stream wrappers to support Wingsuit.'
 # core: 8.x
 package: wingsuit
 

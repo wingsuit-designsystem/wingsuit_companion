@@ -108,6 +108,6 @@ class WingsuitTheme extends TwigExtension {
    * @return mixed|null
    */
   public static function wsItok () {
-    return Settings::get('deployment_identifier');
+    return urlencode(Settings::get('deployment_identifier'));
   }
 }
