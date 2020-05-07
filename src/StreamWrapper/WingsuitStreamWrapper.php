@@ -29,10 +29,10 @@ class WingsuitStreamWrapper extends ExtensionStreamBase {
    * @return string
    */
   protected function getDirectoryPath() {
-    if (!empty(Settings::get('wingsuit_dist'))) {
-      return Settings::get('wingsuit_dist');
+    if (!empty(Settings::get('wingsuit_asset_dir'))) {
+      return Settings::get('wingsuit_asset_dir') . $this->getOwnerName();
     }
-    return $this->getThemeHandler()->getTheme('wingsuit')->getPath() . '/../../dist/' . $this->getOwnerName();
+    return $this->getThemeHandler()->getTheme('wingsuit')->getPath() . '/../../dist/app-drupal/assets/' . $this->getOwnerName();
   }
 
   /**
