@@ -1,9 +1,8 @@
 name: The companion module of "Wingsuit"
 type: module
 description: 'Add Twig extensions and stream wrappers to support Wingsuit.'
-core: 8.x
+core_version_requirement: ^8 || ^9
 package: wingsuit
-
 dependencies:
   - ui_patterns:ui_patterns
   - system_stream_wrapper
