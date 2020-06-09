@@ -1,6 +1,13 @@
 <?php
 
 /**
+ * @file
+ * Contains important hooks.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
  * Implements hook_plugin_filter_TYPE_alter().
  */
 function wingsuit_companion_plugin_filter_layout_alter(array &$definitions, array $extra, $consumer) {
@@ -15,4 +22,20 @@ function wingsuit_companion_plugin_filter_layout_alter(array &$definitions, arra
     }
   }
 
+}
+
+/**
+ * Implements hook_help().
+ */
+function wingsuit_companion_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the wingsuit_companion module.
+    case 'help.page.wingsuit_companion':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This module add Wingsuit Theme extensions.') . '</p>';
+      return $output;
+
+    default:
+  }
 }
