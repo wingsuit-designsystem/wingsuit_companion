@@ -156,7 +156,7 @@ class LibraryDeriver extends AbstractYamlPatternsDeriver {
     $default_theme = $this->themeHandler->getDefault();
     $base_themes = $this->themeHandler->getBaseThemes($this->themeHandler->listInfo(), $default_theme);
     $theme_directories = $this->themeHandler->getThemeDirectories();
-    $theme_directories[$default_theme] .= '/../../source/default/_patterns';
+    $theme_directories[$default_theme] .= '/../../source/default/patterns';
     $directories = [];
     if (isset($theme_directories[$default_theme])) {
       $directories[$default_theme] = $theme_directories[$default_theme];
