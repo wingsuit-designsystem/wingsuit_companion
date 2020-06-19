@@ -2,7 +2,9 @@
 
 namespace Drupal\wingsuit_companion\StreamWrapper;
 
-use Drupal\Core\Site\Settings;
+use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\system_stream_wrapper\StreamWrapper\ExtensionStreamBase;
 
 /**
@@ -17,6 +19,16 @@ class WingsuitStreamWrapper extends ExtensionStreamBase {
    */
   protected $themeHandler;
 
+  /**
+   * WingsuitStreamWrapper constructor.
+   *
+   * @param ConfigFactory $config_factory
+   *   Config factory service.
+   */
+  public function __construct(ConfigFactory $config_factory) {
+    $this->config = $config_factory->getEditable('wingsuit_companion.config');
+  }
+
   protected function getOwnerName() {
     $app_name = parent::getOwnerName();
     return $app_name;
@@ -29,10 +41,8 @@ class WingsuitStreamWrapper extends ExtensionStreamBase {
    * @return string
    */
   protected function getDirectoryPath() {
-    if (!empty(Settings::get('wingsuit_asset_dir'))) {
-      return Settings::get('wingsuit_asset_dir') . $this->getOwnerName();
-    }
-    return $this->getThemeHandler()->getTheme('wingsuit')->getPath() . '/../../dist/app-drupal/assets/' . $this->getOwnerName();
+    $dist_path = $this->config->get('dist_path');
+    return $this->getThemeHandler()->getTheme('wingsuit')->getPath() . $dist_path . '/assets/' . $this->getOwnerName();
   }
 
   /**
