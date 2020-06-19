@@ -3,6 +3,7 @@
 namespace Drupal\wingsuit_companion\Plugin\Deriver;
 
 use Drupal\Component\Serialization\Yaml;
+use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Extension\ExtensionDiscovery;
 use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\ui_patterns\Plugin\Deriver\AbstractYamlPatternsDeriver;
@@ -88,14 +89,17 @@ class LibraryDeriver extends AbstractYamlPatternsDeriver {
    *   Module handler service.
    * @param \Drupal\Core\Extension\ThemeHandlerInterface $theme_handler
    *   Theme handler service.
+   * @param ConfigFactory $config_factory
+   *   Config factory service.
    */
-  public function __construct($base_plugin_id, TypedDataManager $typed_data_manager, $root, array $extensions, ModuleHandlerInterface $module_handler, ThemeHandlerInterface $theme_handler) {
+  public function __construct($base_plugin_id, TypedDataManager $typed_data_manager, $root, array $extensions, ModuleHandlerInterface $module_handler, ThemeHandlerInterface $theme_handler, ConfigFactory $config_factory) {
     parent::__construct($base_plugin_id, $typed_data_manager);
     $this->root = $root;
     $this->fileExtensions = $extensions;
     $this->moduleHandler = $module_handler;
     $this->themeHandler = $theme_handler;
     $this->extensionDiscovery = new ExtensionDiscovery($root);
+    $this->config = $config_factory->getEditable('wingsuit_companion.config');
   }
 
   /**
@@ -108,7 +112,8 @@ class LibraryDeriver extends AbstractYamlPatternsDeriver {
       $container->get('app.root'),
       $container->getParameter('wingsuit_companion.file_extensions'),
       $container->get('module_handler'),
-      $container->get('theme_handler')
+      $container->get('theme_handler'),
+      $container->get('config.factory')
     );
   }
 
@@ -156,7 +161,8 @@ class LibraryDeriver extends AbstractYamlPatternsDeriver {
     $default_theme = $this->themeHandler->getDefault();
     $base_themes = $this->themeHandler->getBaseThemes($this->themeHandler->listInfo(), $default_theme);
     $theme_directories = $this->themeHandler->getThemeDirectories();
-    $theme_directories[$default_theme] .= '/../../source/default/patterns';
+    $dist_path = $this->config->get('dist_path');
+    $theme_directories[$default_theme] .= $dist_path;
     $directories = [];
     if (isset($theme_directories[$default_theme])) {
       $directories[$default_theme] = $theme_directories[$default_theme];
