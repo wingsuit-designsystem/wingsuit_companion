@@ -21,7 +21,7 @@ function wingsuit_companion_plugin_filter_layout_alter(array &$definitions, arra
     if ($definition->getProvider() !== 'wingsuit') {
       unset($definitions[$key]);
     }
-    $additional = $definition->getAdditional();
+    $additional = $definition->get('additional');
     if ($definition->getProvider() === 'wingsuit' && isset($additional['visibility'] ) ) {
       $apps = array_map('trim', explode('|', $additional['visibility']));
       if (!in_array('drupal', $apps)) {
