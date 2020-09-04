@@ -1,3 +1,2 @@
-wingsuit_companion:
-  dist_path: "/../../dist/app-drupal"
-  only_own_layout: FALSE
+dist_path: "/../../dist/app-drupal"
+only_own_layout: FALSE

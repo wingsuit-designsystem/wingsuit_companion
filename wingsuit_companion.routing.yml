@@ -2,6 +2,6 @@ wingsuit_companion.wingsuit_companion_config_form:
   path: '/admin/wingsuit-companion/form/config'
   defaults:
     _form: '\Drupal\wingsuit_companion\Form\ConfigForm'
-    _title: 'ConfigForm'
+    _title: 'Wingsuit Settings'
   requirements:
     _access: 'TRUE'
