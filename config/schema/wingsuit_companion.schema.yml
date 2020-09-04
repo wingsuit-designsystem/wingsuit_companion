@@ -1,4 +1,4 @@
-wingsuit_companion:
+wingsuit_companion.config:
   type: config_object
   label: 'Wingsuit Settings'
   mapping:

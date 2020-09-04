@@ -33,8 +33,8 @@ class ConfigForm extends FormBase {
     ];
     $form['only_own_layout'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Only own layout'),
-      '#description' => $this->t('Check this to hide layout builder layouts.'),
+      '#title' => $this->t('Use only Wingsuit patterns.'),
+      '#description' => $this->t('Check this to hide all other layouts in layout builder.'),
       '#default_value' => $config->get('only_own_layout'),
       '#weight' => '0',
     ];
@@ -61,7 +61,7 @@ class ConfigForm extends FormBase {
       ->set('dist_path', $form_state->getValue('dist_path'))
       ->set('only_own_layout', $form_state->getValue('only_own_layout'))
       ->save();
-    $this->messenger()->addMessage('Companion config stored successfully.');
+    $this->messenger()->addMessage('Wingsuit settings stored successfully.');
   }
 
 }
