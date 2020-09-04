@@ -5,12 +5,13 @@ namespace Drupal\wingsuit_companion\StreamWrapper;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\StreamWrapper\LocalReadOnlyStream;
 use Drupal\system_stream_wrapper\StreamWrapper\ExtensionStreamBase;
 
 /**
  * Defines the read-only theme:// stream wrapper for theme files.
  */
-class WingsuitStreamWrapper extends ExtensionStreamBase {
+class WingsuitStreamWrapper extends LocalReadOnlyStream {
 
   /**
    * The theme handler service.
@@ -29,20 +30,15 @@ class WingsuitStreamWrapper extends ExtensionStreamBase {
     $this->config = $config_factory->getEditable('wingsuit_companion.config');
   }
 
-  protected function getOwnerName() {
-    $app_name = parent::getOwnerName();
-    return $app_name;
-  }
-
   /**
    * Returns the directory path to Wingsuits dist directory set in settings.php.
    * Otherwise it will return the path to Wingsuits default dist location.
    *
    * @return string
    */
-  protected function getDirectoryPath() {
+  public function getDirectoryPath() {
     $dist_path = $this->config->get('dist_path');
-    return $this->getThemeHandler()->getTheme('wingsuit')->getPath() . $dist_path . '/assets/' . $this->getOwnerName();
+    return $this->getThemeHandler()->getTheme('wingsuit')->getPath() . $dist_path . '/assets';
   }
 
   /**
@@ -70,6 +66,31 @@ class WingsuitStreamWrapper extends ExtensionStreamBase {
       $this->themeHandler = \Drupal::service('theme_handler');
     }
     return $this->themeHandler;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getExternalUrl() {
+    $dir = $this->getDirectoryPath();
+    if (empty($dir)) {
+      throw new \InvalidArgumentException("Extension directory for {$this->uri} does not exist.");
+    }
+    $path = rtrim(base_path() . $dir . '/' . $this->getTarget(), '/');
+    return $this->getRequest()->getUriForPath($path);
+  }
+
+  /**
+   * Returns the current request object.
+   *
+   * @return \Symfony\Component\HttpFoundation\Request
+   *   The current request object.
+   */
+  protected function getRequest() {
+    if (!isset($this->request)) {
+      $this->request = \Drupal::service('request_stack')->getCurrentRequest();
+    }
+    return $this->request;
   }
 
 }

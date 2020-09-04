@@ -19,8 +19,5 @@
   ],
   "support": {
     "issues": "https://www.drupal.org/project/issues/wingsuit_companion?version=8.x"
-  },
-  "require-dev": {
-    "drupal/system_stream_wrapper": "^1.0@beta"
   }
 }
