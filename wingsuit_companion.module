@@ -13,23 +13,38 @@ use Drupal\Core\Routing\RouteMatchInterface;
  * Implements hook_plugin_filter_TYPE_alter().
  */
 function wingsuit_companion_plugin_filter_layout_alter(array &$definitions, array $extra, $consumer) {
+  $use_only_wingsuit_layouts = \Drupal::configFactory()->get('wingsuit_companion.config')->get('only_own_layout');
+
   /**
    * @var string $key
    * @var \Drupal\Core\Layout\LayoutDefinition $definition
    */
   foreach ($definitions as $key => $definition) {
-    if ($definition->getProvider() !== 'wingsuit') {
+    if ($definition->getProvider() !== 'wingsuit' && $use_only_wingsuit_layouts === TRUE) {
       unset($definitions[$key]);
     }
-    $additional = $definition->get('additional');
-    if ($definition->getProvider() === 'wingsuit' && isset($additional['visibility'] ) ) {
+  }
+}
+
+/**
+ * Handles visibility property in patterns.
+ *
+ * Implements hook_ui_patterns_info_alter().
+ */
+function wingsuit_companion_ui_patterns_info_alter(&$definitions) {
+  /**
+   * @var $key
+   * @var \Drupal\ui_patterns\Definition\PatternDefinition $definition
+   */
+  foreach ($definitions as $key => $definition) {
+    $additional = $definition->getAdditional();
+    if (isset($additional['visibility'] ) ) {
       $apps = array_map('trim', explode('|', $additional['visibility']));
       if (!in_array('drupal', $apps)) {
         unset($definitions[$key]);
       }
     }
   }
-
 }
 
 /**
