@@ -38,7 +38,8 @@ class WingsuitStreamWrapper extends LocalReadOnlyStream {
    */
   public function getDirectoryPath() {
     $dist_path = $this->config->get('dist_path');
-    return $this->getThemeHandler()->getTheme('wingsuit')->getPath() . $dist_path . '/assets';
+    return $this->canonicalize($this->getThemeHandler()->getTheme('wingsuit')->getPath(
+      ) . $dist_path);
   }
 
   /**
@@ -69,13 +70,38 @@ class WingsuitStreamWrapper extends LocalReadOnlyStream {
   }
 
   /**
+   * Returns an canonical path without ../.
+   *
+   * @param $path
+   *   The path.
+   *
+   * @return string
+   *   The canonical path.
+   */
+  function canonicalize($path) {
+    $path = explode('/', $path);
+    $keys = array_keys($path, '..');
+
+    foreach ($keys as $keypos => $key) {
+      array_splice($path, $key - ($keypos * 2 + 1), 2);
+    }
+
+    $path = implode('/', $path);
+    $path = str_replace('./', '', $path);
+    return $path;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function getExternalUrl() {
     $dir = $this->getDirectoryPath();
     if (empty($dir)) {
-      throw new \InvalidArgumentException("Extension directory for {$this->uri} does not exist.");
+      throw new \InvalidArgumentException(
+        "Extension directory for {$this->uri} does not exist."
+      );
     }
+
     $path = rtrim(base_path() . $dir . '/' . $this->getTarget(), '/');
     return $this->getRequest()->getUriForPath($path);
   }
