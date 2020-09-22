@@ -26,8 +26,11 @@ class WingsuitStreamWrapper extends LocalReadOnlyStream {
    * @param ConfigFactory $config_factory
    *   Config factory service.
    */
-  public function __construct(ConfigFactory $config_factory) {
-    $this->config = $config_factory->getEditable('wingsuit_companion.config');
+  public function __construct(ConfigFactory $config_factory = NULL) {
+    if ($config_factory === NULL) {
+      $config_factory = \Drupal::configFactory();
+    }
+    $this->config = $config_factory->get('wingsuit_companion.config');
   }
 
   /**
