@@ -83,6 +83,8 @@ class LibraryDeriver extends AbstractYamlPatternsDeriver {
    *   The base plugin ID.
    * @param \Drupal\Core\TypedData\TypedDataManager $typed_data_manager
    *   Typed data manager service.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   * @param \Drupal\Core\File\FileSystemInterface $file_system
    * @param string $root
    *   Application root directory.
    * @param array $extensions
@@ -129,6 +131,35 @@ class LibraryDeriver extends AbstractYamlPatternsDeriver {
   }
 
   /**
+   * Removes Wingsuit YAML extensions.
+   */
+  private function removeWingsuitExtensions(&$definition) {
+
+    if (isset($definition['fields'])) {
+      $fields =  & $definition['fields'];
+      foreach ($fields as &$field) {
+        if (isset($field['preview']['faker'])) {
+          unset($field['preview']['faker']);
+        }
+
+        if (isset($field['preview']['id'])) {
+          $field['preview']['theme'] = $field['preview']['id'];
+        }
+
+        foreach (['id', 'settings', 'fields', 'variant'] as $key) {
+          if (isset($field['preview'][$key])) {
+            unset($field['preview'][$key]);
+          }
+        }
+        // Remove preview lists.
+        if (isset($field['preview'][0])) {
+          $field['preview'] = [];
+        }
+      }
+    }
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function getPatterns() {
@@ -144,12 +175,13 @@ class LibraryDeriver extends AbstractYamlPatternsDeriver {
               $definition['base path'] = dirname($file_path);
               $definition['file name'] = basename($file_path);
               $definition['provider'] = $provider;
+              $this->removeWingsuitExtensions($definition);
               $patterns[] = $this->getPatternDefinition($definition);
             }
           }
         }
       } catch (\Throwable $ex) {
-        
+        \Drupal::messenger()->addError("Error while parsing scaning directory " . $directory . ' ' . $ex->getMessage());
       }
     }
 
