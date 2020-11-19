@@ -140,6 +140,13 @@ class LibraryDeriver extends AbstractYamlPatternsDeriver {
       foreach ($fields as &$field) {
         if (isset($field['preview']['faker'])) {
           unset($field['preview']['faker']);
+          $field['preview'] = 'Faked text';
+          continue;
+        }
+
+        // Remove preview lists.
+        if (isset($field['preview'][0]['id'])) {
+          $field['preview'] = $field['preview'][0];
         }
 
         if (isset($field['preview']['id'])) {
@@ -150,10 +157,6 @@ class LibraryDeriver extends AbstractYamlPatternsDeriver {
           if (isset($field['preview'][$key])) {
             unset($field['preview'][$key]);
           }
-        }
-        // Remove preview lists.
-        if (isset($field['preview'][0])) {
-          $field['preview'] = [];
         }
       }
     }
