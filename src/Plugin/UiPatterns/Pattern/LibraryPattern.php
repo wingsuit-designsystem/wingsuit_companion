@@ -9,14 +9,12 @@ use Drupal\ui_patterns\Plugin\PatternBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * The UI Pattern plugin.
- *
- * ID is set to "yaml" for backward compatibility reasons.
+ * Detect Wingsuit (*.wingsuit.yml) Pattern definitions.
  *
  * @UiPattern(
  *   id = "yaml",
- *   label = @Translation("Library Pattern"),
- *   description = @Translation("Pattern defined using a YAML file."),
+ *   label = @Translation("Wingsuit Library Pattern"),
+ *   description = @Translation("Pattern defined using a *.wingsuit.yml file."),
  *   deriver = "\Drupal\wingsuit_companion\Plugin\Deriver\LibraryDeriver"
  * )
  */
