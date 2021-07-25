@@ -1,11 +1,5 @@
 name: Wingsuit companion module
 type: module
-description: 'Add Twig extensions stream wrappers and wingsuit.yml pattern extension.'
+description: 'Add ws-assets stream wrapper.'
 core_version_requirement: ^8 || ^9
-package: wingsuit
-dependencies:
-  - ui_patterns:ui_patterns
-  - ui_patterns:ui_patterns_layouts
-  - ui_patterns_settings:ui_patterns_settings (>=8.x-2.x)
-  - ui_patterns_extends:ui_patterns_extends
-  - components:components
+package: Wingsuit

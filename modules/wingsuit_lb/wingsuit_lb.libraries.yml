@@ -1,0 +1,11 @@
+layout:
+  version: VERSION
+  css:
+    component:
+      css/wingsuit_lb.core.css: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - core/drupalSettings
+    - field_group/element.horizontal_tabs

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\wingsuit_companion\TwigExtension;
+namespace Drupal\wingsuit_ui_patterns\TwigExtension;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Site\Settings;

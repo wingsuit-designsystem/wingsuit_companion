@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\wingsuit_companion\Plugin\Deriver;
+namespace Drupal\wingsuit_ui_patterns\Plugin\Deriver;
 
 use Drupal\Component\Serialization\Yaml;
 use Drupal\Core\Config\ConfigFactory;
@@ -201,19 +201,8 @@ class LibraryDeriver extends AbstractYamlPatternsDeriver {
    *   An array containing directory paths keyed by their extension name.
    */
   protected function getDirectories() {
-    $default_theme = $this->themeHandler->getDefault();
-    $base_themes = $this->themeHandler->getBaseThemes($this->themeHandler->listInfo(), $default_theme);
-    $theme_directories = $this->themeHandler->getThemeDirectories();
     $dist_path = $this->config->get('dist_path');
-    $theme_directories[$default_theme] .= $dist_path;
-    $directories = [];
-    if (isset($theme_directories[$default_theme])) {
-      $directories[$default_theme] = $theme_directories[$default_theme];
-      foreach ($base_themes as $name => $theme) {
-        $directories[$name] = $theme_directories[$name];
-      }
-    }
-
+    $directories['wingsuit_companion'] = $dist_path;
     return $directories;
   }
 

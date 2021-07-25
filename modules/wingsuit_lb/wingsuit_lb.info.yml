@@ -1,0 +1,10 @@
+name: 'Wingsuit Layout Builder'
+core: 8.x
+core_version_requirement: '^8 || ^9'
+type: module
+description: 'Layout extensions with for Wingsuit.'
+package: Wingsuit
+dependencies:
+  - layout_builder_browser:layout_builder_browser
+  - field_group:field_group
+  - gin_lb:gin_lb

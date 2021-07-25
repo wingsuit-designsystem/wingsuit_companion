@@ -1,0 +1,6 @@
+services:
+  wingsuit_layout.layout_choose_controller_alter:
+    class: Drupal\wingsuit_layout\EventSubscriber\LayoutBuilderBrowserEventSubscriber
+    arguments: []
+    tags:
+      - { name: event_subscriber }

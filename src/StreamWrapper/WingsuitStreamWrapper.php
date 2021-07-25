@@ -2,14 +2,12 @@
 
 namespace Drupal\wingsuit_companion\StreamWrapper;
 
-use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactory;
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\StreamWrapper\LocalReadOnlyStream;
 use Drupal\system_stream_wrapper\StreamWrapper\ExtensionStreamBase;
 
 /**
- * Defines the read-only theme:// stream wrapper for theme files.
+ * Defines the read-only ws-assets:// stream wrapper for theme files.
  */
 class WingsuitStreamWrapper extends LocalReadOnlyStream {
 
@@ -34,15 +32,14 @@ class WingsuitStreamWrapper extends LocalReadOnlyStream {
   }
 
   /**
-   * Returns the directory path to Wingsuits dist directory set in settings.php.
-   * Otherwise it will return the path to Wingsuits default dist location.
+   * Returns the directory path to Wingsuit dist directory set in settings.php.
+   * Otherwise it will return the path to Wingsuit default dist location.
    *
    * @return string
    */
   public function getDirectoryPath() {
     $dist_path = $this->config->get('dist_path');
-    return $this->canonicalize($this->getThemeHandler()->getTheme('wingsuit')->getPath(
-      ) . $dist_path);
+    return $dist_path;
   }
 
   /**
@@ -57,41 +54,6 @@ class WingsuitStreamWrapper extends LocalReadOnlyStream {
    */
   public function getDescription() {
     return $this->t('Local files stored under wingsuit dist directory.');
-  }
-
-  /**
-   * Returns the theme handler service.
-   *
-   * @return \Drupal\Core\Extension\ThemeHandlerInterface
-   *   The theme handler service.
-   */
-  protected function getThemeHandler() {
-    if (!isset($this->themeHandler)) {
-      $this->themeHandler = \Drupal::service('theme_handler');
-    }
-    return $this->themeHandler;
-  }
-
-  /**
-   * Returns an canonical path without ../.
-   *
-   * @param $path
-   *   The path.
-   *
-   * @return string
-   *   The canonical path.
-   */
-  function canonicalize($path) {
-    $path = explode('/', $path);
-    $keys = array_keys($path, '..');
-
-    foreach ($keys as $keypos => $key) {
-      array_splice($path, $key - ($keypos * 2 + 1), 2);
-    }
-
-    $path = implode('/', $path);
-    $path = str_replace('./', '', $path);
-    return $path;
   }
 
   /**

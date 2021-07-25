@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\wingsuit_companion\Plugin\UiPatterns\Pattern;
+namespace Drupal\wingsuit_ui_patterns\Plugin\UiPatterns\Pattern;
 
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Extension\ThemeHandlerInterface;

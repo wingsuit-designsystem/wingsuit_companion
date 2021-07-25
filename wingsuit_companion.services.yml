@@ -1,15 +1,7 @@
 services:
-  wingsuit_companion.twig:
-    arguments: ['@renderer', '@url_generator', '@theme.manager', '@date.formatter']
-    class: Drupal\wingsuit_companion\TwigExtension\WingsuitExtension
-    tags:
-      - { name: twig.extension }
   stream_wrapper.wingsuit:
     class: Drupal\wingsuit_companion\StreamWrapper\WingsuitStreamWrapper
     arguments: ['@config.factory']
     tags:
       - { name: stream_wrapper, scheme: ws-assets }
-parameters:
-  wingsuit_companion.file_extensions:
-    - ".wingsuit.yml"
-    - ".wingsuit.yaml"
+

@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * Provides install/uninstall for wingsuit_companion module.
+ */
+
+/**
+ * Install Wingsuit UI Patterns sub module.
+ */
+function wingsuit_companion_update_8001() {
+  \Drupal::service('module_installer')->install(['wingsuit_ui_patterns']);
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->get('wingsuit_companion.config');
+  $dist_path = $config->get('dist_path');
+
+  $absolute_path = _wingsuit_canonicalize(\Drupal::service('theme_handler')->getTheme('wingsuit')->getPath(
+  ) . $dist_path);
+
+  $config_factory->getEditable('wingsuit_companion.config')->set('dist_path', $absolute_path)->save();
+}
+
+function _wingsuit_canonicalize($path) {
+  $path = explode('/', $path);
+  $keys = array_keys($path, '..');
+
+  foreach ($keys as $keypos => $key) {
+    array_splice($path, $key - ($keypos * 2 + 1), 2);
+  }
+
+  $path = implode('/', $path);
+  $path = str_replace('./', '', $path);
+  return $path;
+}
